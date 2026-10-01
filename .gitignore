@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+env/
+.env
+
+# Testing
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# MLflow local file store (regenerate by running the pipeline)
+mlruns/
+mlflow.db
+
+# Model artifacts and per-run scratch
+models/*.joblib
+!models/.gitkeep
+artifacts/*
+!artifacts/.gitkeep
+
+# Airflow
+logs/
+.airflow/
+airflow.db
+airflow.cfg
+webserver_config.py
+
+# NOTE: data/credit_default.csv IS committed on purpose.
+# The lab must run with no network access.
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,142 @@
+name: Smoke Test
+
+# =============================================================================
+# DDM501 Lab 2 — THIS WORKFLOW IS THE DEFINITION OF DONE.
+# It will fail until you have completed every TODO. Make it green.
+# =============================================================================
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  # ---------------------------------------------------------------------------
+  pipeline:
+    name: Pipeline, tests and registry
+    runs-on: ubuntu-latest
+    env:
+      # No tracking server in CI: MLflow writes to a local file store.
+      MLFLOW_TRACKING_URI: file://${{ github.workspace }}/mlruns
+      PYTHONPATH: ${{ github.workspace }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Verify no package needs a compiler
+        run: |
+          # Every dependency must resolve to a wheel. If this starts failing, a
+          # source-only package crept in and students on Windows and Apple
+          # Silicon will not be able to install it.
+          pip install --only-binary=:all: --dry-run -r requirements.txt
+
+      - name: Verify Airflow is not in the local requirements
+        run: |
+          # Airflow belongs in its own image. Putting it here makes pip
+          # backtrack for minutes and can break the MLflow install outright.
+          if grep -iq '^apache-airflow' requirements.txt; then
+            echo "::error::apache-airflow must not be in requirements.txt"
+            exit 1
+          fi
+
+      - name: Check the dataset is committed
+        run: |
+          test -f data/credit_default.csv
+          python -c "import pandas as pd; d=pd.read_csv('data/credit_default.csv'); \
+            assert d.shape == (30000, 24), d.shape; print('dataset OK', d.shape)"
+
+      - name: Run the unit tests
+        run: pytest tests/ -v --cov=pipeline --cov-report=term-missing
+
+      - name: Run the pipeline end to end
+        run: python -m pipeline.run_pipeline --model-type hgb --run-name ci
+
+      - name: Assert the run was tracked and the model registered
+        run: |
+          python - <<'PY'
+          import json, pathlib, sys
+          import mlflow
+          from mlflow.tracking import MlflowClient
+          from pipeline.config import (CHAMPION_ALIAS, MLFLOW_EXPERIMENT_NAME,
+                                       REGISTERED_MODEL_NAME)
+
+          summary = json.loads(pathlib.Path("artifacts/last_run.json").read_text())
+          metrics = summary["metrics"]
+          print("metrics:", {k: round(v, 4) for k, v in metrics.items() if isinstance(v, float)})
+
+          assert metrics["roc_auc"] > 0.65, f"roc_auc too low: {metrics['roc_auc']}"
+          assert "fairness_gap" in metrics, "evaluation must report a fairness gap"
+
+          client = MlflowClient()
+          exp = client.get_experiment_by_name(MLFLOW_EXPERIMENT_NAME)
+          assert exp is not None, "experiment was never created"
+          runs = client.search_runs([exp.experiment_id])
+          assert runs, "no runs were logged"
+
+          mv = client.get_model_version_by_alias(REGISTERED_MODEL_NAME, CHAMPION_ALIAS)
+          assert mv is not None, "no @champion alias — promotion did not run"
+          print(f"champion: {REGISTERED_MODEL_NAME} v{mv.version}")
+          PY
+
+      - name: Run the experiment sweep
+        run: python -m experiments.run_experiments --model-type hgb
+
+  # ---------------------------------------------------------------------------
+  dag:
+    name: Airflow DAG parses
+    runs-on: ubuntu-latest
+    env:
+      AIRFLOW_HOME: ${{ github.workspace }}/.airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'False'
+      AIRFLOW__CORE__DAGS_FOLDER: ${{ github.workspace }}/dags
+      PROJECT_ROOT: ${{ github.workspace }}
+      PYTHONPATH: ${{ github.workspace }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Airflow with its constraints
+        run: |
+          python -m pip install --upgrade pip
+          pip install "apache-airflow==2.8.4" \
+            --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.8.4/constraints-3.11.txt"
+          pip install -r requirements-airflow.txt \
+            --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.8.4/constraints-3.11.txt"
+          pip check
+
+      - name: Parse the DAG
+        run: |
+          airflow db migrate
+          airflow dags list
+          # list-import-errors exits 0 even when there are errors, so check the output
+          errors=$(airflow dags list-import-errors)
+          echo "$errors"
+          if ! echo "$errors" | grep -q 'No data found'; then
+            echo "::error::the DAG failed to import"
+            exit 1
+          fi
+
+      - name: Check the task graph
+        run: |
+          airflow tasks list credit_default_training --tree
+          for t in ingest validate train evaluate decide promote_model skip_promotion cleanup; do
+            airflow tasks list credit_default_training | grep -qx "$t" \
+              || { echo "::error::missing task: $t"; exit 1; }
+          done
