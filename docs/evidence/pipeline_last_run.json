@@ -1,0 +1,89 @@
+{
+  "run_id": "e5c318e902174897aaf4d002c8daae15",
+  "model_type": "hgb",
+  "experiment": "credit-default-risk",
+  "metrics": {
+    "roc_auc": 0.7472779649013568,
+    "pr_auc": 0.5444327292754363,
+    "precision": 0.555739058629232,
+    "recall": 0.4817465998568361,
+    "f1": 0.5161042944785276,
+    "brier": 0.14479126821752683,
+    "true_positives": 673,
+    "false_positives": 538,
+    "false_negatives": 724,
+    "true_negatives": 4065,
+    "threshold": 0.3,
+    "fairness_gap": 0.030649359963460743
+  },
+  "group_metrics": {
+    "1": {
+      "roc_auc": 0.736855546236701,
+      "pr_auc": 0.5585407300975582,
+      "precision": 0.5634615384615385,
+      "recall": 0.484297520661157,
+      "f1": 0.5208888888888888,
+      "brier": 0.1565352044846424,
+      "true_positives": 293,
+      "false_positives": 227,
+      "false_negatives": 312,
+      "true_negatives": 1527,
+      "threshold": 0.3,
+      "n": 2359,
+      "selection_rate": 0.22043238660449344
+    },
+    "2": {
+      "roc_auc": 0.7531301963120145,
+      "pr_auc": 0.5349050927216265,
+      "precision": 0.5499276410998553,
+      "recall": 0.4797979797979798,
+      "f1": 0.5124747134187457,
+      "brier": 0.13718238448939563,
+      "true_positives": 380,
+      "false_positives": 311,
+      "false_negatives": 412,
+      "true_negatives": 2538,
+      "threshold": 0.3,
+      "n": 3641,
+      "selection_rate": 0.1897830266410327
+    }
+  },
+  "promotion": {
+    "run_id": "e5c318e902174897aaf4d002c8daae15",
+    "model_name": "credit-default-classifier",
+    "version": "1",
+    "outcome": "champion",
+    "quality_gate": {
+      "passed": true,
+      "failed_checks": [],
+      "detail": {
+        "roc_auc": {
+          "passed": true,
+          "rule": "roc_auc >= 0.7"
+        },
+        "pr_auc": {
+          "passed": true,
+          "rule": "pr_auc >= 0.45"
+        },
+        "fairness_gap": {
+          "passed": true,
+          "rule": "fairness_gap <= 0.1"
+        }
+      }
+    },
+    "metrics": {
+      "roc_auc": 0.7472779649013568,
+      "pr_auc": 0.5444327292754363,
+      "precision": 0.555739058629232,
+      "recall": 0.4817465998568361,
+      "f1": 0.5161042944785276,
+      "brier": 0.14479126821752683,
+      "true_positives": 673,
+      "false_positives": 538,
+      "false_negatives": 724,
+      "true_negatives": 4065,
+      "threshold": 0.3,
+      "fairness_gap": 0.030649359963460743
+    }
+  }
+}

@@ -1,3 +1,4 @@
+name: ddm501-lab2-review
 # =============================================================================
 # Lab 2 stack: MLflow tracking server + Airflow (Postgres-backed)
 # DDM501
@@ -42,15 +43,16 @@ services:
   # ---------------------------------------------------------------------------
   mlflow:
     image: ghcr.io/mlflow/mlflow:v2.19.0
-    container_name: ddm501-mlflow
+    container_name: lab2-review-mlflow
     ports:
-      - "5000:5000"
+      - "15001:5000"
     volumes:
       - mlflow_data:/mlflow
     command: >
       mlflow server
       --backend-store-uri sqlite:////mlflow/mlflow.db
-      --default-artifact-root /mlflow/artifacts
+      --serve-artifacts
+      --artifacts-destination /mlflow/artifacts
       --host 0.0.0.0
       --port 5000
     healthcheck:
@@ -66,7 +68,7 @@ services:
   # ---------------------------------------------------------------------------
   postgres:
     image: postgres:15-alpine
-    container_name: ddm501-postgres
+    container_name: lab2-review-postgres
     environment:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
@@ -84,7 +86,7 @@ services:
   # ---------------------------------------------------------------------------
   airflow-init:
     <<: *airflow-common
-    container_name: ddm501-airflow-init
+    container_name: lab2-review-airflow-init
     entrypoint: /bin/bash
     command:
       - -c
@@ -96,10 +98,10 @@ services:
 
   airflow-webserver:
     <<: *airflow-common
-    container_name: ddm501-airflow-webserver
+    container_name: lab2-review-airflow-webserver
     command: webserver
     ports:
-      - "8080:8080"
+      - "18082:8080"
     depends_on:
       postgres:
         condition: service_healthy
@@ -115,7 +117,7 @@ services:
 
   airflow-scheduler:
     <<: *airflow-common
-    container_name: ddm501-airflow-scheduler
+    container_name: lab2-review-airflow-scheduler
     command: scheduler
     depends_on:
       postgres:

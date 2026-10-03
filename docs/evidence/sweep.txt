@@ -1,0 +1,53 @@
+INFO:pipeline.training:MLflow tracking at file:///Users/sofnb25/Documents/devops/lab2-review-20261003-172428/mlruns, experiment 'credit-default-risk'
+INFO:pipeline.data_ingestion:Loaded 30000 rows x 24 columns from /Users/sofnb25/Documents/devops/lab2-review-20261003-172428/data/credit_default.csv
+INFO:pipeline.validation:Validation passed: 30000 rows x 24 columns
+INFO:pipeline.data_ingestion:Loaded 30000 rows x 24 columns from /Users/sofnb25/Documents/devops/lab2-review-20261003-172428/data/credit_default.csv
+INFO:pipeline.data_ingestion:Split: train=24000 test=6000
+INFO:experiments:[1/7] logreg-01 {'C': 0.1, 'max_iter': 1000}
+/Users/sofnb25/Documents/devops/lab2-review-20261003-172428/.venv/lib/python3.11/site-packages/mlflow/types/utils.py:435: UserWarning: Hint: Inferred schema contains integer column(s). Integer columns in Python cannot represent missing values. If your input data contains missing values at inference time, it will be encoded as floats and will cause a schema enforcement error. The best way to avoid this problem is to infer the model schema based on a realistic data sample (training dataset) that includes missing values. Alternatively, you can declare integer columns as doubles (float64) whenever these columns may have missing values. See `Handling Integers With Missing Values <https://www.mlflow.org/docs/latest/models.html#handling-integers-with-missing-values>`_ for more details.
+  warnings.warn(
+INFO:pipeline.training:Trained logreg in run d0141b2df3e14f2185cfc5b26366c297
+INFO:pipeline.evaluation:ROC AUC 0.7511 | PR AUC 0.5534 | recall 0.507 | fairness gap 0.056
+INFO:experiments:[2/7] logreg-02 {'C': 1.0, 'max_iter': 1000}
+/Users/sofnb25/Documents/devops/lab2-review-20261003-172428/.venv/lib/python3.11/site-packages/mlflow/types/utils.py:435: UserWarning: Hint: Inferred schema contains integer column(s). Integer columns in Python cannot represent missing values. If your input data contains missing values at inference time, it will be encoded as floats and will cause a schema enforcement error. The best way to avoid this problem is to infer the model schema based on a realistic data sample (training dataset) that includes missing values. Alternatively, you can declare integer columns as doubles (float64) whenever these columns may have missing values. See `Handling Integers With Missing Values <https://www.mlflow.org/docs/latest/models.html#handling-integers-with-missing-values>`_ for more details.
+  warnings.warn(
+INFO:pipeline.training:Trained logreg in run b10d3f09d3dc451b929f0d80995cc94a
+INFO:pipeline.evaluation:ROC AUC 0.7511 | PR AUC 0.5534 | recall 0.507 | fairness gap 0.054
+INFO:experiments:[3/7] rf-03 {'n_estimators': 200, 'max_depth': 8, 'min_samples_leaf': 20}
+/Users/sofnb25/Documents/devops/lab2-review-20261003-172428/.venv/lib/python3.11/site-packages/mlflow/types/utils.py:435: UserWarning: Hint: Inferred schema contains integer column(s). Integer columns in Python cannot represent missing values. If your input data contains missing values at inference time, it will be encoded as floats and will cause a schema enforcement error. The best way to avoid this problem is to infer the model schema based on a realistic data sample (training dataset) that includes missing values. Alternatively, you can declare integer columns as doubles (float64) whenever these columns may have missing values. See `Handling Integers With Missing Values <https://www.mlflow.org/docs/latest/models.html#handling-integers-with-missing-values>`_ for more details.
+  warnings.warn(
+INFO:pipeline.training:Trained rf in run 2be9d6d1d7c0480580314b00d26f7490
+INFO:pipeline.evaluation:ROC AUC 0.7481 | PR AUC 0.5391 | recall 0.487 | fairness gap 0.033
+INFO:experiments:[4/7] rf-04 {'n_estimators': 300, 'max_depth': 12, 'min_samples_leaf': 20}
+/Users/sofnb25/Documents/devops/lab2-review-20261003-172428/.venv/lib/python3.11/site-packages/mlflow/types/utils.py:435: UserWarning: Hint: Inferred schema contains integer column(s). Integer columns in Python cannot represent missing values. If your input data contains missing values at inference time, it will be encoded as floats and will cause a schema enforcement error. The best way to avoid this problem is to infer the model schema based on a realistic data sample (training dataset) that includes missing values. Alternatively, you can declare integer columns as doubles (float64) whenever these columns may have missing values. See `Handling Integers With Missing Values <https://www.mlflow.org/docs/latest/models.html#handling-integers-with-missing-values>`_ for more details.
+  warnings.warn(
+INFO:pipeline.training:Trained rf in run 10ef1392335d4d59bc04eb0604a6409e
+INFO:pipeline.evaluation:ROC AUC 0.7478 | PR AUC 0.5400 | recall 0.486 | fairness gap 0.033
+INFO:experiments:[5/7] hgb-05 {'max_iter': 200, 'learning_rate': 0.1, 'max_depth': 4, 'l2_regularization': 1.0}
+/Users/sofnb25/Documents/devops/lab2-review-20261003-172428/.venv/lib/python3.11/site-packages/mlflow/types/utils.py:435: UserWarning: Hint: Inferred schema contains integer column(s). Integer columns in Python cannot represent missing values. If your input data contains missing values at inference time, it will be encoded as floats and will cause a schema enforcement error. The best way to avoid this problem is to infer the model schema based on a realistic data sample (training dataset) that includes missing values. Alternatively, you can declare integer columns as doubles (float64) whenever these columns may have missing values. See `Handling Integers With Missing Values <https://www.mlflow.org/docs/latest/models.html#handling-integers-with-missing-values>`_ for more details.
+  warnings.warn(
+INFO:pipeline.training:Trained hgb in run 41c09bb7f8e047239e97ae046f272ed4
+INFO:pipeline.evaluation:ROC AUC 0.7486 | PR AUC 0.5468 | recall 0.483 | fairness gap 0.037
+INFO:experiments:[6/7] hgb-06 {'max_iter': 300, 'learning_rate': 0.06, 'max_depth': 6, 'l2_regularization': 1.0}
+/Users/sofnb25/Documents/devops/lab2-review-20261003-172428/.venv/lib/python3.11/site-packages/mlflow/types/utils.py:435: UserWarning: Hint: Inferred schema contains integer column(s). Integer columns in Python cannot represent missing values. If your input data contains missing values at inference time, it will be encoded as floats and will cause a schema enforcement error. The best way to avoid this problem is to infer the model schema based on a realistic data sample (training dataset) that includes missing values. Alternatively, you can declare integer columns as doubles (float64) whenever these columns may have missing values. See `Handling Integers With Missing Values <https://www.mlflow.org/docs/latest/models.html#handling-integers-with-missing-values>`_ for more details.
+  warnings.warn(
+INFO:pipeline.training:Trained hgb in run 9e11075b14784dfbbd90fc9c729ea659
+INFO:pipeline.evaluation:ROC AUC 0.7473 | PR AUC 0.5444 | recall 0.482 | fairness gap 0.031
+INFO:experiments:[7/7] hgb-07 {'max_iter': 500, 'learning_rate': 0.03, 'max_depth': 8, 'l2_regularization': 2.0}
+/Users/sofnb25/Documents/devops/lab2-review-20261003-172428/.venv/lib/python3.11/site-packages/mlflow/types/utils.py:435: UserWarning: Hint: Inferred schema contains integer column(s). Integer columns in Python cannot represent missing values. If your input data contains missing values at inference time, it will be encoded as floats and will cause a schema enforcement error. The best way to avoid this problem is to infer the model schema based on a realistic data sample (training dataset) that includes missing values. Alternatively, you can declare integer columns as doubles (float64) whenever these columns may have missing values. See `Handling Integers With Missing Values <https://www.mlflow.org/docs/latest/models.html#handling-integers-with-missing-values>`_ for more details.
+  warnings.warn(
+INFO:pipeline.training:Trained hgb in run d1e62e624f0944c8b141d339e9d5c220
+INFO:pipeline.evaluation:ROC AUC 0.7475 | PR AUC 0.5435 | recall 0.485 | fairness gap 0.028
+
+======================================================================================
+run           model      roc_auc   pr_auc   recall  fair gap                    run_id
+--------------------------------------------------------------------------------------
+logreg-01     logreg      0.7511   0.5534   0.5068    0.0558  d0141b2df3e14f2185cfc5b2
+logreg-02     logreg      0.7511   0.5534   0.5068    0.0544  b10d3f09d3dc451b929f0d80
+hgb-05        hgb         0.7486   0.5468   0.4832    0.0368  41c09bb7f8e047239e97ae04
+rf-03         rf          0.7481   0.5391   0.4875    0.0330  2be9d6d1d7c0480580314b00
+rf-04         rf          0.7478   0.5400   0.4860    0.0334  10ef1392335d4d59bc04eb06
+hgb-07        hgb         0.7475   0.5435   0.4853    0.0276  d1e62e624f0944c8b141d339
+hgb-06        hgb         0.7473   0.5444   0.4817    0.0306  9e11075b14784dfbbd90fc9c
+lab2-review   hgb         0.7473   0.5444   0.4817    0.0306  e5c318e902174897aaf4d002
+======================================================================================

@@ -1,0 +1,77 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.11.17, pytest-8.3.4, pluggy-1.6.0 -- /Users/sofnb25/Documents/devops/lab2-review-20261003-172428/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/sofnb25/Documents/devops/lab2-review-20261003-172428
+configfile: pytest.ini
+plugins: cov-6.0.0
+collecting ... collected 51 items
+
+tests/test_pipeline.py::TestDataIngestion::test_dataset_has_expected_shape PASSED [  1%]
+tests/test_pipeline.py::TestDataIngestion::test_split_is_stratified PASSED [  3%]
+tests/test_pipeline.py::TestDataIngestion::test_split_is_reproducible PASSED [  5%]
+tests/test_pipeline.py::TestDataIngestion::test_no_leakage_between_train_and_test PASSED [  7%]
+tests/test_pipeline.py::TestDataIngestion::test_stats_report_positive_rate PASSED [  9%]
+tests/test_pipeline.py::TestValidation::test_clean_data_passes PASSED    [ 11%]
+tests/test_pipeline.py::TestValidation::test_missing_column_is_caught PASSED [ 13%]
+tests/test_pipeline.py::TestValidation::test_non_numeric_column_is_caught PASSED [ 15%]
+tests/test_pipeline.py::TestValidation::test_too_few_rows_is_caught PASSED [ 17%]
+tests/test_pipeline.py::TestValidation::test_missing_values_are_caught PASSED [ 19%]
+tests/test_pipeline.py::TestValidation::test_out_of_domain_category_is_caught PASSED [ 21%]
+tests/test_pipeline.py::TestValidation::test_impossible_age_is_caught PASSED [ 23%]
+tests/test_pipeline.py::TestValidation::test_negative_payment_is_caught PASSED [ 25%]
+tests/test_pipeline.py::TestValidation::test_degenerate_target_is_caught PASSED [ 27%]
+tests/test_pipeline.py::TestValidation::test_all_levels_are_reported_together PASSED [ 29%]
+tests/test_pipeline.py::TestValidation::test_report_is_returned_when_not_raising PASSED [ 31%]
+tests/test_pipeline.py::TestPreprocessing::test_derived_features_are_added PASSED [ 33%]
+tests/test_pipeline.py::TestPreprocessing::test_original_frame_is_not_mutated PASSED [ 35%]
+tests/test_pipeline.py::TestPreprocessing::test_utilisation_ratio_is_sensible PASSED [ 37%]
+tests/test_pipeline.py::TestPreprocessing::test_zero_limit_gives_nan_not_inf PASSED [ 39%]
+tests/test_pipeline.py::TestPreprocessing::test_max_delay_matches_pay_columns PASSED [ 41%]
+tests/test_pipeline.py::TestPreprocessing::test_months_delayed_counts_positive_statuses PASSED [ 43%]
+tests/test_pipeline.py::TestPreprocessing::test_preprocessor_one_hots_categoricals PASSED [ 45%]
+tests/test_pipeline.py::TestPreprocessing::test_preprocessor_is_returned_unfitted PASSED [ 47%]
+tests/test_pipeline.py::TestPreprocessing::test_preprocessor_handles_unseen_category PASSED [ 49%]
+tests/test_pipeline.py::TestTraining::test_every_model_type_builds[logreg] PASSED [ 50%]
+tests/test_pipeline.py::TestTraining::test_every_model_type_builds[rf] PASSED [ 52%]
+tests/test_pipeline.py::TestTraining::test_every_model_type_builds[hgb] PASSED [ 54%]
+tests/test_pipeline.py::TestTraining::test_unknown_model_type_raises PASSED [ 56%]
+tests/test_pipeline.py::TestTraining::test_params_override_defaults PASSED [ 58%]
+tests/test_pipeline.py::TestTraining::test_pipeline_fits_and_predicts_probabilities PASSED [ 60%]
+tests/test_pipeline.py::TestTraining::test_preprocessing_travels_with_the_model PASSED [ 62%]
+tests/test_pipeline.py::TestEvaluation::test_metrics_are_in_range PASSED [ 64%]
+tests/test_pipeline.py::TestEvaluation::test_confusion_counts_sum_to_n PASSED [ 66%]
+tests/test_pipeline.py::TestEvaluation::test_lower_threshold_never_lowers_recall PASSED [ 68%]
+tests/test_pipeline.py::TestEvaluation::test_group_metrics_cover_every_group PASSED [ 70%]
+tests/test_pipeline.py::TestEvaluation::test_small_group_is_skipped PASSED [ 72%]
+tests/test_pipeline.py::TestEvaluation::test_fairness_gap_is_non_negative PASSED [ 74%]
+tests/test_pipeline.py::TestEvaluation::test_fairness_gap_is_the_selection_rate_range PASSED [ 76%]
+tests/test_pipeline.py::TestEvaluation::test_fairness_gap_is_zero_for_one_group PASSED [ 78%]
+tests/test_pipeline.py::TestQualityGate::test_good_model_passes PASSED   [ 80%]
+tests/test_pipeline.py::TestQualityGate::test_weak_model_is_rejected PASSED [ 82%]
+tests/test_pipeline.py::TestQualityGate::test_accurate_but_unfair_model_is_rejected PASSED [ 84%]
+tests/test_pipeline.py::TestQualityGate::test_missing_metric_fails_closed PASSED [ 86%]
+tests/test_pipeline.py::TestQualityGate::test_missing_fairness_gap_alone_fails PASSED [ 88%]
+tests/test_pipeline.py::TestPromotion::test_first_passing_model_becomes_champion PASSED [ 90%]
+tests/test_pipeline.py::TestPromotion::test_failing_model_is_registered_but_not_aliased PASSED [ 92%]
+tests/test_pipeline.py::TestPromotion::test_marginal_improvement_becomes_challenger PASSED [ 94%]
+tests/test_pipeline.py::TestPromotion::test_clear_improvement_replaces_champion PASSED [ 96%]
+tests/test_pipeline.py::TestPromotion::test_best_run_follows_the_metric PASSED [ 98%]
+tests/test_pipeline.py::TestPromotion::test_unknown_experiment_raises PASSED [100%]
+
+--------- coverage: platform darwin, python 3.11.17-final-0 ----------
+Name                         Stmts   Miss  Cover   Missing
+----------------------------------------------------------
+pipeline/__init__.py             0      0   100%
+pipeline/config.py              38      0   100%
+pipeline/data_ingestion.py      27      5    81%   24, 59-62
+pipeline/evaluation.py          58     22    62%   100-130
+pipeline/preprocessing.py       33      1    97%   73
+pipeline/registry.py            80     14    82%   51, 167-177, 187-197
+pipeline/run_pipeline.py        59     59     0%   12-127
+pipeline/training.py            54     24    56%   42-45, 49-51, 87-123
+pipeline/validation.py          70      2    97%   94, 113
+----------------------------------------------------------
+TOTAL                          419    127    70%
+
+
+============================= 51 passed in 23.30s ==============================

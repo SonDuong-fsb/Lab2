@@ -1,0 +1,30 @@
+2026/10/03 17:32:01 INFO mlflow.tracking.fluent: Experiment with name 'credit-default-risk' does not exist. Creating a new experiment.
+INFO:pipeline.training:MLflow tracking at file:///Users/sofnb25/Documents/devops/lab2-review-20261003-172428/mlruns, experiment 'credit-default-risk'
+INFO:pipeline:[1/5] Ingest
+INFO:pipeline.data_ingestion:Loaded 30000 rows x 24 columns from /Users/sofnb25/Documents/devops/lab2-review-20261003-172428/data/credit_default.csv
+INFO:pipeline:[2/5] Validate
+INFO:pipeline.validation:Validation passed: 30000 rows x 24 columns
+INFO:pipeline:[3/5] Split and train
+INFO:pipeline.data_ingestion:Loaded 30000 rows x 24 columns from /Users/sofnb25/Documents/devops/lab2-review-20261003-172428/data/credit_default.csv
+INFO:pipeline.data_ingestion:Split: train=24000 test=6000
+/Users/sofnb25/Documents/devops/lab2-review-20261003-172428/.venv/lib/python3.11/site-packages/mlflow/types/utils.py:435: UserWarning: Hint: Inferred schema contains integer column(s). Integer columns in Python cannot represent missing values. If your input data contains missing values at inference time, it will be encoded as floats and will cause a schema enforcement error. The best way to avoid this problem is to infer the model schema based on a realistic data sample (training dataset) that includes missing values. Alternatively, you can declare integer columns as doubles (float64) whenever these columns may have missing values. See `Handling Integers With Missing Values <https://www.mlflow.org/docs/latest/models.html#handling-integers-with-missing-values>`_ for more details.
+  warnings.warn(
+INFO:pipeline.training:Trained hgb in run e5c318e902174897aaf4d002c8daae15
+INFO:pipeline:[4/5] Evaluate
+INFO:pipeline.evaluation:ROC AUC 0.7473 | PR AUC 0.5444 | recall 0.482 | fairness gap 0.031
+INFO:pipeline:[5/5] Promote
+Successfully registered model 'credit-default-classifier'.
+Created version '1' of model 'credit-default-classifier'.
+INFO:pipeline.registry:Registered credit-default-classifier v1 from run e5c318e902174897aaf4d002c8daae15
+INFO:pipeline.registry:No champion yet — candidate wins by default
+INFO:pipeline.registry:Alias @champion -> credit-default-classifier v1
+INFO:pipeline.registry:credit-default-classifier v1 -> champion
+INFO:pipeline:Summary written to /Users/sofnb25/Documents/devops/lab2-review-20261003-172428/artifacts/last_run.json
+
+==============================================================
+run_id   e5c318e902174897aaf4d002c8daae15
+model    hgb
+roc_auc  0.7473    pr_auc 0.5444
+recall   0.4817    fairness gap 0.0306
+registry credit-default-classifier v1 -> champion
+==============================================================
