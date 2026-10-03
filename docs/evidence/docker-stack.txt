@@ -1,0 +1,5 @@
+NAME                            IMAGE                                  COMMAND                  SERVICE             CREATED          STATUS                    PORTS
+lab2-review-airflow-scheduler   ddm501-lab2-review-airflow-scheduler   "/usr/bin/dumb-init …"   airflow-scheduler   22 seconds ago   Up 15 seconds             8080/tcp
+lab2-review-airflow-webserver   ddm501-lab2-review-airflow-webserver   "/usr/bin/dumb-init …"   airflow-webserver   22 seconds ago   Up 15 seconds (healthy)   0.0.0.0:18082->8080/tcp, [::]:18082->8080/tcp
+lab2-review-mlflow              ghcr.io/mlflow/mlflow:v2.19.0          "mlflow server --bac…"   mlflow              8 minutes ago    Up 8 minutes (healthy)    0.0.0.0:15001->5000/tcp, [::]:15001->5000/tcp
+lab2-review-postgres            postgres:15-alpine                     "docker-entrypoint.s…"   postgres            8 minutes ago    Up 8 minutes (healthy)    5432/tcp

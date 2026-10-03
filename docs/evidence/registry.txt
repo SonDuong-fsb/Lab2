@@ -1,0 +1,7 @@
+Champion: credit-default-classifier version 1
+Run ID: e5c318e902174897aaf4d002c8daae15
+ARTIFACT OK: model
+ARTIFACT OK: validation_report.json
+ARTIFACT OK: feature_columns.json
+ARTIFACT OK: evaluation.json
+REGISTRY AND MODEL LOAD PASSED

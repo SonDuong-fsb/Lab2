@@ -1,0 +1,9 @@
+<Task(PythonOperator): ingest>
+    <Task(PythonOperator): validate>
+        <Task(PythonOperator): train>
+            <Task(PythonOperator): evaluate>
+                <Task(BranchPythonOperator): decide>
+                    <Task(PythonOperator): promote_model>
+                        <Task(PythonOperator): cleanup>
+                    <Task(PythonOperator): skip_promotion>
+                        <Task(PythonOperator): cleanup>
